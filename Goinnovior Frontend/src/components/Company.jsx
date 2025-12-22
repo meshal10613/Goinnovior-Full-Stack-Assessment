@@ -14,13 +14,14 @@ const Company = () => {
     const settings = {
         infinite: true,
         autoplay: true,
-        speed: 3000,
+        speed: 4000,
         autoplaySpeed: 0,
         cssEase: "linear",
         arrows: false,
         slidesToShow: 6,
         slidesToScroll: 1,
-
+        centerMode: true,
+        centerPadding: "0px",
         responsive: [
             {
                 breakpoint: 1280,

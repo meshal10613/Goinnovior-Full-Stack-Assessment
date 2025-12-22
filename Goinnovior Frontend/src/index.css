@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
 
 @plugin "daisyui" {
@@ -8,21 +8,37 @@
 @plugin "daisyui/theme" {
     name: "light";
     default: true;
-    --color-primary: #EE4B21;
-    --color-secondary: #07B4B0;
-	--color-accent: #CDF0EF;
+    --color-primary: #ee4b21;
+    --color-secondary: #07b4b0;
+    --color-accent: #cdf0ef;
 }
 
-body{
-	font-family: "Roboto", sans-serif;
+body {
+    font-family: "Roboto", sans-serif;
 }
 
-.navlink li a:hover{
+.navlink li a:hover {
     color: var(--color-primary);
     background: none;
 }
 
-.navlink li a.active{
+.navlink li a.active {
     color: var(--color-primary);
     font-weight: 600;
+}
+
+/* Company */
+.slick-slide {
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+
+.slick-center {
+    opacity: 1 !important;
+}
+
+.slick-center + .slick-slide,
+.slick-center + .slick-slide + .slick-slide,
+.slick-slide.slick-active:not(.slick-center) {
+    opacity: 0.6;
 }

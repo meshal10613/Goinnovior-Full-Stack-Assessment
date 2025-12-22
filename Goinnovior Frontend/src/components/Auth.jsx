@@ -3,10 +3,15 @@ import logoT from "../assets/logo-t.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
 import { IoIosMail } from "react-icons/io";
+import facebook from "../assets/fb.png";
+import google from "../assets/google.png";
+import apple from "../assets/apple.png";
 
 const Auth = () => {
     const [isLogin, SetIsLogin] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
+    const [focused, setFocused] = useState(false);
+    const [value, setValue] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -28,16 +33,20 @@ const Auth = () => {
                         <div className="flex items-center gap-4">
                             <button
                                 onClick={() => SetIsLogin(!isLogin)}
-                                className={`px-5 py-2 rounded-full text-white font-medium ${
-                                    isLogin ? "border border-white" : ""
+                                className={`px-5 py-2 rounded-full text-white cursor-pointer ${
+                                    isLogin
+                                        ? "border border-white font-medium"
+                                        : ""
                                 }`}
                             >
                                 Login
                             </button>
                             <button
                                 onClick={() => SetIsLogin(!isLogin)}
-                                className={`px-5 py-2 rounded-full text-white ${
-                                    isLogin ? "" : "border border-white"
+                                className={`px-5 py-2 rounded-full text-white cursor-pointer ${
+                                    isLogin
+                                        ? ""
+                                        : "border border-white font-medium"
                                 }`}
                             >
                                 Sign Up
@@ -48,10 +57,12 @@ const Auth = () => {
                     {/* Content Container */}
                     <div className="flex flex-col items-center mt-10">
                         <h1 className="text-3xl font-bold text-white">
-                            Welcome Back!
+                            {isLogin ? "Welcome Back!" : "Create Your Account"}
                         </h1>
                         <p className="text-gray-100 text-sm mt-2">
-                            We missed you, Please provide your credential
+                            {isLogin
+                                ? "We missed you, Please provide your credential"
+                                : "Join us today! Fill in your details to get started."}
                         </p>
 
                         {/* Form */}
@@ -59,11 +70,12 @@ const Auth = () => {
                             onSubmit={handleSubmit}
                             className="mt-8 w-full max-w-md space-y-4"
                         >
+                            {/* email */}
                             <div className="relative">
                                 <input
                                     name="email"
                                     type="email"
-                                    className="w-full rounded-md py-3 px-4 bg-white focus:outline-none peer"
+                                    className="w-full rounded-md text-gray-500 py-3 px-4 bg-white focus:outline-none peer"
                                     required
                                 />
                                 <span
@@ -77,34 +89,47 @@ const Auth = () => {
                                 </span>
                             </div>
 
+                            {/* password */}
                             <div className="relative">
                                 <input
                                     name="password"
-                                    type={showPassword ? "password" : "text"}
-                                    className="w-full rounded-md py-3 px-4 bg-white focus:outline-none peer"
+                                    type={showPassword ? "text" : "password"}
+                                    className="w-full rounded-md text-gray-500 py-3 px-4 bg-white focus:outline-none peer"
                                     required
+                                    value={value}
+                                    onChange={(e) => setValue(e.target.value)}
+                                    onFocus={() => setFocused(true)}
+                                    onBlur={() => setFocused(false)}
                                 />
+
                                 <span
                                     className="absolute text-gray-500 left-3 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none 
-									transition-opacity
-									peer-focus:opacity-0
-									peer-valid:opacity-0
-									opacity-100"
+                                    transition-opacity
+                                    peer-focus:opacity-0
+                                    peer-valid:opacity-0
+                                    opacity-100"
                                 >
                                     <MdLockOutline size={15} /> Password
                                 </span>
-                                <span
-                                    onClick={() =>
-                                        setShowPassword(!showPassword)
-                                    }
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer"
-                                >
-                                    {showPassword ? <FaEye /> : <FaEyeSlash />}
-                                </span>
+
+                                {(focused || value) && (
+                                    <span
+                                        onClick={() =>
+                                            setShowPassword(!showPassword)
+                                        }
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer"
+                                    >
+                                        {showPassword ? (
+                                            <FaEye />
+                                        ) : (
+                                            <FaEyeSlash />
+                                        )}
+                                    </span>
+                                )}
                             </div>
 
                             <div className="flex justify-end">
-                                <a href="#" className="text-gray-700 text-sm">
+                                <a href="#" className="text-gray-700 text-sm hover:underline">
                                     Forgot Password?
                                 </a>
                             </div>
@@ -118,21 +143,33 @@ const Auth = () => {
 
                             <div className="flex items-center my-4">
                                 <div className="grow h-px bg-gray-300"></div>
-                                <span className="px-4 text-gray-700 text-sm">
+                                <span className="px-15 text-gray-700 text-sm">
                                     or
                                 </span>
                                 <div className="grow h-px bg-gray-300"></div>
                             </div>
 
                             <div className="grid grid-cols-3 gap-3">
-                                <button className="flex justify-center items-center py-2 bg-white shadow rounded-md">
-                                    📘
+                                <button className="flex justify-center items-center py-2 bg-white shadow rounded-md cursor-pointer">
+                                    <img
+                                        src={facebook}
+                                        alt="facebook"
+                                        className="w-fit"
+                                    />
                                 </button>
-                                <button className="flex justify-center items-center py-2 bg-white shadow rounded-md">
-                                    
+                                <button className="flex justify-center items-center py-2 bg-white shadow rounded-md cursor-pointer">
+                                    <img
+                                        src={apple}
+                                        alt="apple"
+                                        className="w-fit"
+                                    />
                                 </button>
-                                <button className="flex justify-center items-center py-2 bg-white shadow rounded-md">
-                                    🟢
+                                <button className="flex justify-center items-center py-2 bg-white shadow rounded-md cursor-pointer">
+                                    <img
+                                        src={google}
+                                        alt="google"
+                                        className="w-fit"
+                                    />
                                 </button>
                             </div>
                         </form>
