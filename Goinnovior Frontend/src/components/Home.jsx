@@ -1,9 +1,10 @@
 import React from 'react';
+import Company from './Company';
 
 const Home = () => {
 	return (
 		<div>
-			<h2 className='bg-primary text-accent'>asdfasd</h2>
+			<Company/>
 		</div>
 	);
 };
