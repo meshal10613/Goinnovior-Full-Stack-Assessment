@@ -6,21 +6,70 @@ import { IoIosMail } from "react-icons/io";
 import facebook from "../assets/fb.png";
 import google from "../assets/google.png";
 import apple from "../assets/apple.png";
+import useAxios from "../hooks/useAxios";
+import Swal from "sweetalert2";
 
 const Auth = () => {
+    const axios = useAxios();
     const [isLogin, SetIsLogin] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
     const [focused, setFocused] = useState(false);
     const [value, setValue] = useState("");
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const email = e.target.email.value;
         const password = e.target.password.value;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+            setError("Please enter a valid email address.");
+            return;
+        }
+        if (password.length < 6) {
+            setError("Password must be at least 6 characters long.");
+        }
+
+        setError("");
         if (isLogin) {
-            console.log("login", email, password);
+            try {
+                const res = await axios.post("/api/v1/auth/login", {
+                    email,
+                    password,
+                });
+                setLoading(false);
+                await document.getElementById("my_modal_2").close();
+                Swal.fire({
+                    title: "Congratulations!",
+                    text: `${res.data.message}`,
+                    icon: "success",
+                    confirmButtonColor: "#07b4b0",
+                });
+            } catch (error) {
+                setLoading(false);
+                setError(error.response.data.message);
+            }
         } else {
-            console.log("signup", email, password);
+            try {
+                const res = await axios.post("/api/v1/auth/register", {
+                    email,
+                    password,
+                });
+                setLoading(false);
+                await document.getElementById("my_modal_2").close();
+                Swal.fire({
+                    title: "Congratulations!",
+                    text: `${res.data.message}. Please login to continue`,
+                    icon: "success",
+                    confirmButtonColor: "#07b4b0",
+                });
+            } catch (error) {
+                setLoading(false);
+                setError(error.response.data.message);
+            }
         }
     };
 
@@ -74,16 +123,16 @@ const Auth = () => {
                             <div className="relative">
                                 <input
                                     name="email"
-                                    type="email"
+                                    type="text"
                                     className="w-full rounded-md text-gray-500 py-3 px-4 bg-white focus:outline-none peer"
                                     required
                                 />
                                 <span
                                     className="absolute text-gray-500 left-3 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none 
-									transition-opacity
-									peer-focus:opacity-0
-									peer-valid:opacity-0
-									opacity-100"
+                                    transition-opacity
+                                    peer-focus:opacity-0
+                                    peer-valid:opacity-0
+                                    opacity-100"
                                 >
                                     <IoIosMail size={15} /> Email
                                 </span>
@@ -129,17 +178,33 @@ const Auth = () => {
                             </div>
 
                             <div className="flex justify-end">
-                                <a href="#" className="text-gray-700 text-sm hover:underline">
+                                <a
+                                    href="#"
+                                    className="text-gray-700 text-sm hover:underline"
+                                >
                                     Forgot Password?
                                 </a>
                             </div>
 
-                            <button
-                                type="submit"
-                                className="bg-secondary text-white w-full py-3 rounded-md font-semibold hover:bg-teal-600 cursor-pointer"
-                            >
-                                {isLogin ? "Log In" : "Sign Up"}
-                            </button>
+                            <div>
+                                <button
+                                    type="submit"
+                                    className="bg-secondary text-white w-full py-3 rounded-md font-semibold hover:bg-teal-600 cursor-pointer"
+                                >
+                                    {loading ? (
+                                        <div className="loading loading-spinner"></div>
+                                    ) : isLogin ? (
+                                        "Log In"
+                                    ) : (
+                                        "Sign Up"
+                                    )}
+                                </button>
+                                {error && (
+                                    <p className="text-red-500 text-base">
+                                        {error}
+                                    </p>
+                                )}
+                            </div>
 
                             <div className="flex items-center my-4">
                                 <div className="grow h-px bg-gray-300"></div>

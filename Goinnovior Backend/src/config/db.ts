@@ -6,8 +6,15 @@ export const pool = new Pool({
     ssl: { rejectUnauthorized: false },
 });
 
-const initDB = async() => {
-
+const initDB = async () => {
+    await pool.query(`
+		CREATE TABLE IF NOT EXISTS users (
+			id SERIAL PRIMARY KEY,
+			name VARCHAR(255),
+			email VARCHAR(255) NOT NULL UNIQUE,
+			password TEXT NOT NULL CHECK (length(password) >= 6)
+		)
+	`);
 };
 
 export default initDB;

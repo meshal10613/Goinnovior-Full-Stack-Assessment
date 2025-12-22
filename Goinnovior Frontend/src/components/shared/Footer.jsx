@@ -6,6 +6,20 @@ import LocationLink from "../LocationLink";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { Link, NavLink } from "react-router";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import visa from "../../assets/bank/visa.png";
+import mastercard from "../../assets/bank/mastercard.png";
+import nogod from "../../assets/bank/nogod.png";
+import bkash from "../../assets/bank/bkash.png";
+import rocket from "../../assets/bank/rocket.png";
+import upay from "../../assets/bank/upay.png";
+import sure from "../../assets/bank/sure-cash.png";
+import taptap from "../../assets/bank/taptap.png";
+import cellfin from "../../assets/bank/cellfin.png";
+import dbbl from "../../assets/bank/dbbl.png";
+import city from "../../assets/bank/city.png";
+import islami from "../../assets/bank/islami.png";
+import brac from "../../assets/bank/brac.png";
+import ucb from "../../assets/bank/ucb.png";
 
 const Footer = () => {
     const email = "info@zaheen.com";
@@ -20,9 +34,12 @@ const Footer = () => {
             })
             .catch((err) => console.error("Failed to copy: ", err));
     };
+
+    const banks = [visa, mastercard, nogod, bkash, rocket, upay, sure, taptap, cellfin, dbbl, city, islami, brac, ucb];
+
     return (
         <div className="bg-[#F7F7F7]">
-            <div className="max-w-300 mx-auto py-10">
+            <div className="max-w-300 mx-auto py-10 px-3 lg:px-0">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-0">
                     {/* 1st column */}
                     <div>
@@ -96,6 +113,13 @@ const Footer = () => {
 				</div>
 				<div className="">
 					<h2 className="font-semibold">Payment Channels</h2>
+                    <div className="flex flex-wrap gap-3 items-center">
+                        {
+                            banks.map((b) => 
+                                <img src={b} alt={b} key={b} className="w-20 h-10"/>
+                            )
+                        }
+                    </div>
 				</div>
 
 				<div className="divider"></div>
