@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import logo from "../../assets/logo.png";
-import { TbLocation } from "react-icons/tb";
 import { CiMail } from "react-icons/ci";
 import LocationLink from "../LocationLink";
 import { MdOutlineContentCopy } from "react-icons/md";
