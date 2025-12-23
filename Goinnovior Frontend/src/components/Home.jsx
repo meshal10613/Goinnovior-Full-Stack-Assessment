@@ -4,6 +4,7 @@ import Process from './Process';
 import ProcessCards from './ProcessCards';
 import VedioHero from './VedioHero';
 import HeroBottom from './HeroBottom';
+import Apparels from './Apparels';
 
 const Home = () => {
 	return (
@@ -13,6 +14,7 @@ const Home = () => {
 			<Company/>
 			<Process/>
 			<ProcessCards/>
+			<Apparels/>
 		</div>
 	);
 };

@@ -15,6 +15,16 @@ const initDB = async () => {
 			password TEXT NOT NULL CHECK (length(password) >= 6)
 		)
 	`);
+
+    await pool.query(`
+		CREATE TABLE IF NOT EXISTS products (
+			id SERIAL PRIMARY KEY,
+			img TEXT NOT NULL,
+			name VARCHAR(100) NOT NULL,
+			min_price NUMERIC(10,2) NOT NULL,
+			max_price NUMERIC(10,2) NOT NULL
+		);
+	`);
 };
 
 export default initDB;
