@@ -12,7 +12,7 @@ const Apparels = () => {
             .then((res) => res.json())
             .then((data) => setData(data.data));
     }, [data]);
-    console.log(data);
+	
     return (
         <div className="max-w-300 mx-auto my-10">
             <div className="container">
